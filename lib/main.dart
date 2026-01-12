@@ -1,13 +1,11 @@
-// lib/main.dart
-
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:devgram/screens/wrapper.dart';
+import 'package:sharedev/screens/wrapper.dart';
 import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   try {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
@@ -15,17 +13,17 @@ void main() async {
   } catch (e) {
     print('Erro ao inicializar Firebase: $e');
   }
-  
-  runApp(const DevGramApp());
+
+  runApp(const ShareDevApp());
 }
 
-class DevGramApp extends StatelessWidget {
-  const DevGramApp({super.key});
+class ShareDevApp extends StatelessWidget {
+  const ShareDevApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'DevGram',
+      title: 'ShareDev',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.purple,

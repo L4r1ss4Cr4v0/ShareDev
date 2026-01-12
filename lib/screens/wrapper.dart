@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:devgram/screens/auth_screen.dart';
-import 'package:devgram/screens/gallery_screen.dart';
+import 'package:sharedev/screens/auth_screen.dart';
+import 'package:sharedev/screens/gallery_screen.dart';
 
 /// Widget que decide qual tela mostrar baseado no estado de autenticação
 class Wrapper extends StatelessWidget {

@@ -1,5 +1,3 @@
-// lib/screens/auth_screen.dart (Redesign Modernizado)
-
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -110,16 +108,14 @@ class _AuthScreenState extends State<AuthScreen> {
                         color: theme.colorScheme.primary,
                       ),
                       const SizedBox(height: 16),
-
                       Text(
-                        'DevGram',
+                        'ShareDev',
                         style: theme.textTheme.headlineMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                           color: theme.colorScheme.primary,
                         ),
                       ),
                       const SizedBox(height: 8),
-
                       AnimatedSwitcher(
                         duration: const Duration(milliseconds: 250),
                         child: Text(
@@ -129,8 +125,6 @@ class _AuthScreenState extends State<AuthScreen> {
                         ),
                       ),
                       const SizedBox(height: 32),
-
-                      // Campo E-mail
                       TextFormField(
                         controller: _emailController,
                         keyboardType: TextInputType.emailAddress,
@@ -142,15 +136,14 @@ class _AuthScreenState extends State<AuthScreen> {
                           ),
                         ),
                         validator: (value) {
-                          if (value == null || value.isEmpty)
+                          if (value == null || value.isEmpty) {
                             return 'Digite seu e-mail';
+                          }
                           if (!value.contains('@')) return 'E-mail inválido';
                           return null;
                         },
                       ),
                       const SizedBox(height: 16),
-
-                      // Campo Senha
                       TextFormField(
                         controller: _passwordController,
                         obscureText: true,
@@ -170,7 +163,6 @@ class _AuthScreenState extends State<AuthScreen> {
                         },
                       ),
                       const SizedBox(height: 24),
-
                       if (_errorMessage.isNotEmpty)
                         AnimatedContainer(
                           duration: const Duration(milliseconds: 250),
@@ -195,8 +187,6 @@ class _AuthScreenState extends State<AuthScreen> {
                             ],
                           ),
                         ),
-
-                      // Botão principal
                       if (_isLoading)
                         const CircularProgressIndicator()
                       else
@@ -213,9 +203,7 @@ class _AuthScreenState extends State<AuthScreen> {
                             child: Text(_isLogin ? 'Entrar' : 'Cadastrar'),
                           ),
                         ),
-
                       const SizedBox(height: 20),
-
                       TextButton(
                         onPressed: () {
                           setState(() {

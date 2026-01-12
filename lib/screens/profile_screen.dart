@@ -1,5 +1,3 @@
-// lib/screens/profile_screen.dart
-
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -35,7 +33,6 @@ class ProfileScreen extends StatelessWidget {
 
           return Column(
             children: [
-              // Informações do usuário
               Container(
                 padding: const EdgeInsets.all(24),
                 color: Theme.of(context).primaryColor.withOpacity(0.1),
@@ -67,7 +64,6 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    // Mostrar UID para facilitar compartilhamento
                     Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 12,
@@ -97,7 +93,6 @@ class ProfileScreen extends StatelessWidget {
                           IconButton(
                             icon: const Icon(Icons.copy, size: 16),
                             onPressed: () {
-                              // Em produção, copiar para clipboard
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                   content: Text('UID copiado!'),
@@ -111,8 +106,6 @@ class ProfileScreen extends StatelessWidget {
                   ],
                 ),
               ),
-
-              // Grade de fotos
               Expanded(
                 child: photos.isEmpty
                     ? const Center(
@@ -129,7 +122,8 @@ class ProfileScreen extends StatelessWidget {
                         itemCount: photos.length,
                         itemBuilder: (context, index) {
                           final photo = photos[index];
-                          final photoData = photo.data() as Map<String, dynamic>;
+                          final photoData =
+                              photo.data() as Map<String, dynamic>;
                           final imageData = photoData['imageData'] as String?;
 
                           if (imageData == null) {
@@ -141,7 +135,6 @@ class ProfileScreen extends StatelessWidget {
 
                           return GestureDetector(
                             onTap: () {
-                              // Mostrar foto em tela cheia
                               showDialog(
                                 context: context,
                                 builder: (ctx) => Dialog(

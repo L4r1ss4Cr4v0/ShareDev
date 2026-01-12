@@ -1,14 +1,10 @@
-// ✅ NOVO DESIGN — GalleryScreen
-// Mantém 100% da lógica, apenas reorganiza UI com um visual mais moderno
-// Inclui AppBar estilizada, filtros em chips, fundo suave, cards mais elegantes
-
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:devgram/screens/profile_screen.dart';
-import 'package:devgram/widgets/photo_card.dart';
+import 'package:sharedev/screens/profile_screen.dart';
+import 'package:sharedev/widgets/photo_card.dart';
 
 enum Filtro { todas, minhasFotos, compartilhadas }
 
@@ -25,7 +21,6 @@ class _GalleryScreenState extends State<GalleryScreen> {
 
   String get _currentUserId => FirebaseAuth.instance.currentUser!.uid;
 
-  // ========== UPLOAD ========== (lógica mantida)
   Future<void> _pickAndUploadImage() async {
     try {
       final XFile? image = await _imagePicker.pickImage(
@@ -66,7 +61,6 @@ class _GalleryScreenState extends State<GalleryScreen> {
     }
   }
 
-  // ========== DIALOG DESCRIÇÃO ========== (lógica idêntica)
   Future<String?> _showDescriptionDialog() async {
     final controller = TextEditingController();
 
@@ -98,12 +92,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
     );
   }
 
-  // ========== EXCLUSÃO, LIKE, SHARE, EDIT, COMENT ==========
-  // (todo o restante é idêntico à lógica original — não alterado)
-
-  // ========== EXCLUSÃO DE FOTO ==========
   Future<void> _deletePhoto(String photoId) async {
-    // Confirmação
     final confirm = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -145,11 +134,9 @@ class _GalleryScreenState extends State<GalleryScreen> {
     }
   }
 
-  // ========== CURTIR/DESCURTIR ==========
   Future<void> _toggleLike(String photoId, List<dynamic> currentLikes) async {
     try {
       if (currentLikes.contains(_currentUserId)) {
-        // Descurtir
         await FirebaseFirestore.instance
             .collection('fotos')
             .doc(photoId)
@@ -157,7 +144,6 @@ class _GalleryScreenState extends State<GalleryScreen> {
           'likes': FieldValue.arrayRemove([_currentUserId])
         });
       } else {
-        // Curtir
         await FirebaseFirestore.instance
             .collection('fotos')
             .doc(photoId)
@@ -174,7 +160,6 @@ class _GalleryScreenState extends State<GalleryScreen> {
     }
   }
 
-  // ========== COMPARTILHAR ==========
   Future<void> _sharePhoto(String photoId) async {
     final controller = TextEditingController();
 
@@ -230,7 +215,6 @@ class _GalleryScreenState extends State<GalleryScreen> {
     }
   }
 
-  // ========== EDITAR DESCRIÇÃO ==========
   Future<void> _editDescription(String photoId, String currentDesc) async {
     final controller = TextEditingController(text: currentDesc);
 
@@ -281,7 +265,6 @@ class _GalleryScreenState extends State<GalleryScreen> {
     }
   }
 
-  // ========== COMENTÁRIOS ==========
   void _showComments(String photoId, Map<String, dynamic> photoData) {
     final commentController = TextEditingController();
 
@@ -304,7 +287,6 @@ class _GalleryScreenState extends State<GalleryScreen> {
                 padding: const EdgeInsets.all(16),
                 child: Column(
                   children: [
-                    // Título
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -322,8 +304,6 @@ class _GalleryScreenState extends State<GalleryScreen> {
                       ],
                     ),
                     const Divider(),
-
-                    // Lista de comentários
                     Expanded(
                       child: comentarios.isEmpty
                           ? const Center(
@@ -346,8 +326,6 @@ class _GalleryScreenState extends State<GalleryScreen> {
                               },
                             ),
                     ),
-
-                    // Campo para novo comentário
                     const Divider(),
                     Row(
                       children: [
@@ -417,7 +395,6 @@ class _GalleryScreenState extends State<GalleryScreen> {
     );
   }
 
-  // ===== STREAM =====
   Stream<QuerySnapshot> _getPhotosStream() {
     switch (_filtroAtual) {
       case Filtro.minhasFotos:
@@ -440,14 +417,12 @@ class _GalleryScreenState extends State<GalleryScreen> {
     }
   }
 
-  // ================= UI REDESIGN =================
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xfff5f6fa),
       appBar: AppBar(
-        title: const Text('DevGram',
+        title: const Text('ShareDev',
             style: TextStyle(fontWeight: FontWeight.bold)),
         elevation: 0,
         backgroundColor: Colors.white,
@@ -471,8 +446,6 @@ class _GalleryScreenState extends State<GalleryScreen> {
       body: Column(
         children: [
           const SizedBox(height: 10),
-
-          // ✅ Filtros agora são Chips mais bonitos
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -484,9 +457,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
               ],
             ),
           ),
-
           const SizedBox(height: 10),
-
           Expanded(
             child: StreamBuilder<QuerySnapshot>(
               stream: _getPhotosStream(),
@@ -551,7 +522,6 @@ class _GalleryScreenState extends State<GalleryScreen> {
     );
   }
 
-  // CHIP DE FILTROS
   Widget _buildChip(String label, Filtro filtro) {
     final bool ativo = _filtroAtual == filtro;
     return Padding(
