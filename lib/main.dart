@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:sharedev/screens/wrapper.dart';
-import 'firebase_options.dart';
+import 'config/firebase_config.dart';
+import 'screens/wrapper.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  try {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
-  } catch (e) {
-    print('Erro ao inicializar Firebase: $e');
-  }
+  await _initializeFirebase();
 
   runApp(const ShareDevApp());
+}
+
+Future<void> _initializeFirebase() async {
+  try {
+    await Firebase.initializeApp(
+      options: FirebaseConfig.current,
+    );
+  } catch (e, stackTrace) {
+    debugPrint('Erro ao inicializar Firebase');
+    debugPrint('$e');
+    debugPrint('$stackTrace');
+  }
 }
 
 class ShareDevApp extends StatelessWidget {
@@ -26,8 +32,8 @@ class ShareDevApp extends StatelessWidget {
       title: 'ShareDev',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.purple,
         useMaterial3: true,
+        colorSchemeSeed: Colors.purple,
         appBarTheme: const AppBarTheme(
           centerTitle: true,
           elevation: 2,
