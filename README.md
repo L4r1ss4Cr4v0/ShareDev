@@ -272,15 +272,17 @@ flutter build ios --release \
 sharedev/
 │
 ├── lib/
-│   ├── screens/          # 📱 Telas da aplicação
-│   ├── widgets/          # 🧩 Componentes reutilizáveis
-│   └── main.dart         # 🚀 Entry point
+│   ├── config/
+│   │   └── firebase_config.dart  # 🔧 Configurações Firebase via dart-define
+│   ├── screens/                  # 📱 Telas da aplicação
+│   ├── widgets/                  # 🧩 Componentes reutilizáveis
+│   └── main.dart                 # 🚀 Entry point
 │
-├── android/              # 🤖 Configurações Android
-├── ios/                  # 🍎 Configurações iOS
-├── web/                  # 🌐 Configurações Web
+├── android/                      # 🤖 Configurações Android
+├── ios/                          # 🍎 Configurações iOS
+├── web/                          # 🌐 Configurações Web
 │
-└── pubspec.yaml          # 📦 Dependências
+└── pubspec.yaml                  # 📦 Dependências
 ```
 
 ---
